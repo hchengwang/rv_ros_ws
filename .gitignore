@@ -1,8 +1,21 @@
+# ROS
+build/
+devel/
+
+# LCM
+pod-build
+
+# Latexian
+TSWLatexianTemp*
+*.o
+*.class
+**/*.swp
+
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
