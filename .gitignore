@@ -1,14 +1,14 @@
 # ROS
 build/
-devel/lib
-devel/share
-devel/include
+devel/
 
 # LCM
 pod-build
 
 # Latexian
 TSWLatexianTemp*
+
+*~
 *.o
 *.class
 **/*.swp
