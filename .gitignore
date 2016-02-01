@@ -1,6 +1,8 @@
 # ROS
 build/
-devel/
+devel/lib
+devel/share
+devel/include
 
 # LCM
 pod-build
