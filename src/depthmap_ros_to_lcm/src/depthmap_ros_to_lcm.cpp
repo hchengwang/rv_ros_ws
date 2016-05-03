@@ -9,7 +9,7 @@
 
 #include <lcm/lcm.h>
 #include <bot_core/bot_core.h>
-#include <cv_bridge_lcm/bl-cv-bridge-lcm.h>
+#include <cv_bridge_lcm/rv-cv-bridge-lcm.h>
 
 using namespace cv;
 using namespace std;
