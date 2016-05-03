@@ -55,7 +55,7 @@ void callback(const sensor_msgs::ImageConstPtr& depthMap)
             int y = j * scale;
             // float m -> int mm
             //int16_t d = (int16_t)(im_depth.at<int16_t>(j, i)) * d_scale; 
-            int16_t d = (int16_t)(im_depth.at<float>(j, i)) * 1000;
+            int16_t d = (int16_t)(im_depth.at<float>(j, i) * 1000);
 
             im_kinect_depth.at<int16_t>(y, x) =     d;
             if(scale == 2)
