@@ -15,8 +15,8 @@ void chatterCallback(mit_msgs::MocapPosition msg)
     float ay = msg.axisangle.y;
     float az = msg.axisangle.z;
     //ROS_INFO_STRING("HI GUYS " << x << "\t" << y << "\t" << z);
-    std::cout << "translation:\t" << x << "\t" << y << "\t" << z << std::endl;
-    std::cout << "axisangle:\t" << ax << "\t" << ay << "\t" << az << std::endl;
+    //std::cout << "translation:\t" << x << "\t" << y << "\t" << z << std::endl;
+    //std::cout << "axisangle:\t" << ax << "\t" << ay << "\t" << az << std::endl;
 
     bot_core_pose_t p;
     p.utime = bot_timestamp_now();
@@ -37,7 +37,11 @@ void chatterCallback(mit_msgs::MocapPosition msg)
     p.orientation[2] = quat_t[2];
     p.orientation[3] = quat_t[3];
 
-    bot_core_pose_t_publish(lcm, "POSE", &p);
+    if (p.pos[0] == 0 && p.pos[1] == 0 && p.pos[2] == 0){
+        std::cout << "missing vicon data" << std::endl;
+    }else{
+        bot_core_pose_t_publish(lcm, "POSE", &p);
+    }
 }
 
 int main(int argc, char **argv)
