@@ -11,6 +11,8 @@
 #include <lcm/lcm.h>
 #include <bot_core/bot_core.h>
 #include <cv_bridge_lcm/rv-cv-bridge-lcm.h>
+#include <jpeg-utils/jpeg-utils.h>
+#include <jpeg-utils/jpeg-utils-ijg.h>
 
 using namespace cv;
 using namespace std;
@@ -32,6 +34,8 @@ void callback(const sensor_msgs::ImageConstPtr& imageMap)
 void callback_compressed(const sensor_msgs::CompressedImageConstPtr& imageMap)
 {
     ROS_INFO("Received image ");
+
+    cv_bridge_lcm->publish_mjpg(imageMap->data, 640, 480, (char*)"IMAGE_PICAMERA");
 }
 
 int main(int argc, char **argv)

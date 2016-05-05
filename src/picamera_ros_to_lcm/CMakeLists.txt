@@ -126,6 +126,7 @@ include_directories(
 # add_dependencies(picamera_ros_to_lcm_node picamera_ros_to_lcm_generate_messages_cpp)
 
 find_library(rv-cv-bridge-lcm_LIBRARIES rv-cv-bridge-lcm ~/code/build/lib)
+find_library(bot2-core_LIBRARIES bot2-core ~/code/build/lib)
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(picamera_ros_to_lcm_node
@@ -133,6 +134,7 @@ find_library(rv-cv-bridge-lcm_LIBRARIES rv-cv-bridge-lcm ~/code/build/lib)
    ${OpenCV_LIBRARIES}
    lcm
    ${rv-cv-bridge-lcm_LIBRARIES} 
+   ${bot2-core_LIBRARIES} 
    )
 
 #############
