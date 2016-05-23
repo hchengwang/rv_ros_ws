@@ -19,6 +19,9 @@ using namespace std;
 
 cvBridgeLCM* cv_bridge_lcm;
 
+// deal with parameters
+std::string veh;
+
 void callback(const sensor_msgs::ImageConstPtr& imageMap)
 {
     ROS_INFO("Received image %dx%d", imageMap->width, imageMap->height);
@@ -35,19 +38,30 @@ void callback_compressed(const sensor_msgs::CompressedImageConstPtr& imageMap)
 {
     ROS_INFO("Received image ");
 
-    cv_bridge_lcm->publish_mjpg(imageMap->data, 640, 480, (char*)"IMAGE_PICAMERA");
+    std::stringstream ss;
+    ss << "IMAGE_PICAMERA_" << veh;
+    cv_bridge_lcm->publish_mjpg(imageMap->data, 640, 480, (char*)ss.str().c_str());
 }
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "depth_converter");
-    ros::NodeHandle n;
+
+    // init nh as "~", and set up ~xxx in launch file
+    ros::NodeHandle nh("~");
+
+    // two ways to setup params
+    nh.param<std::string>("veh", veh, "trabant");
+    //ros::param::param<std::string>("~veh", veh, "trabant");
+    std::stringstream ss;
+    ss << "/" << veh << "/camera_node/image/compressed";
+    ROS_INFO("Subscribe Topic: %s", ss.str().c_str());
 
     lcm_t* lcm = lcm_create(NULL);
     cv_bridge_lcm = new cvBridgeLCM(lcm, lcm);
 
     cout << "init lcm ok..." << endl;
-    ros::Subscriber sub = n.subscribe("/trabant/camera_node/image/compressed", 1000, callback_compressed);
+    ros::Subscriber sub = nh.subscribe(ss.str().c_str(), 1000, callback_compressed);
     ros::spin();
     return 0;
 }
