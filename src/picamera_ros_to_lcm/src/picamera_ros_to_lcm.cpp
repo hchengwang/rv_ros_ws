@@ -41,6 +41,12 @@ void callback_compressed(const sensor_msgs::CompressedImageConstPtr& imageMap)
     std::stringstream ss;
     ss << "IMAGE_PICAMERA_" << veh;
     cv_bridge_lcm->publish_mjpg(imageMap->data, 640, 480, (char*)ss.str().c_str());
+
+    // try decompress here
+    cv::Mat im_pi = cv::Mat::zeros(480, 640, CV_8UC3);
+    im_pi = cv::imdecode(cv::Mat(imageMap->data), CV_LOAD_IMAGE_COLOR); //copy image
+    cv::cvtColor(im_pi, im_pi, CV_BGR2RGB);
+    cv_bridge_lcm->publish_mjpg(im_pi, (char*)"IMAGE_PICAMERA");
 }
 
 int main(int argc, char **argv)
