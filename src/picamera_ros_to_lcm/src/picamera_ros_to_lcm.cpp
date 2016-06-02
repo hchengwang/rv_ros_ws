@@ -31,7 +31,7 @@ void callback(const sensor_msgs::ImageConstPtr& imageMap)
     cv_ptr = cv_bridge::toCvCopy(imageMap, imageMap->encoding); //copy image
     //cv_ptr = cv_bridge::toCvCopy(depthMap, sensor_msgs::image_encodings::TYPE_32FC1); //copy image
     
-    cv::Mat im_pi = cv::Mat::zeros(480, 640, CV_8UC3);
+    cv::Mat im_pi = cv::Mat::zeros(height, width, CV_8UC3);
     im_pi = cv_ptr->image.clone();
     cv_bridge_lcm->publish_mjpg(im_pi, (char*)"IMAGE_PICAMERA");
 }
@@ -42,29 +42,31 @@ void callback_compressed(const sensor_msgs::CompressedImageConstPtr& imageMap)
 
     std::stringstream ss;
     ss << "IMAGE_PICAMERA_" << veh;
-    cv_bridge_lcm->publish_mjpg(imageMap->data, 640, 480, (char*)ss.str().c_str());
+    cv_bridge_lcm->publish_mjpg(imageMap->data, width, height, (char*)ss.str().c_str());
 
     // try decompress here
-	double t_tot = (double)cvGetTickCount();
-
-    cv::Mat im_pi = cv::Mat::zeros(480, 640, CV_8UC3);
-    im_pi = cv::imdecode(cv::Mat(imageMap->data), CV_LOAD_IMAGE_COLOR); //copy image
-    cv::cvtColor(im_pi, im_pi, CV_BGR2RGB);
-
-	t_tot = cvGetTickCount() - t_tot;
-	ROS_INFO("Total Decompressing Time %f ms", t_tot / ((double)cvGetTickFrequency()*1000.) );
-	//cv_bridge_lcm->publish_mjpg(im_pi, (char*)"IMAGE_PICAMERA");
+//	double t_tot = (double)cvGetTickCount();
+//
+//    cv::Mat im_pi = cv::Mat::zeros(480, 640, CV_8UC3);
+//    im_pi = cv::imdecode(cv::Mat(imageMap->data), CV_LOAD_IMAGE_COLOR); //copy image
+//    cv::cvtColor(im_pi, im_pi, CV_BGR2RGB);
+//
+//	t_tot = cvGetTickCount() - t_tot;
+//	ROS_INFO("Total Decompressing Time %f ms", t_tot / ((double)cvGetTickFrequency()*1000.) );
+//	//cv_bridge_lcm->publish_mjpg(im_pi, (char*)"IMAGE_PICAMERA");
 }
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "depth_converter");
+    ros::init(argc, argv, "republisher");
 
     // init nh as "~", and set up ~xxx in launch file
     ros::NodeHandle nh("~");
 
     // two ways to setup params
     nh.param<std::string>("veh", veh, "trabant");
+    //nh.param<std::string>("width", width, 640);
+    //nh.param<std::string>("height", height, 480);
     //ros::param::param<std::string>("~veh", veh, "trabant");
     std::stringstream ss;
     ss << "/" << veh << "/camera_node/image/compressed";
