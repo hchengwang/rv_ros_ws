@@ -75,8 +75,8 @@ int main(int argc, char **argv)
 	width = 640;
 	height = 480;
 	if (veh.compare(0, 5, "mocap")){
-		width = 2560;
-		height = 1920;
+		width = 1280;
+		height = 960;
 	}
 
     lcm_t* lcm = lcm_create(NULL);
