@@ -75,11 +75,11 @@ int main(int argc, char **argv)
 	width = 640;
 	height = 480;
 	if (veh.compare(0, 5, "mocap")){
-		width = 2560;
-		height = 1920;
+		width = 1280;
+		height = 960;
 	}
 
-    lcm_t* lcm = lcm_create(NULL);
+    lcm_t* lcm = lcm_create("udpm://239.255.76.67:7667?recv_buf_size=100000&ttl=1");
     cv_bridge_lcm = new cvBridgeLCM(lcm, lcm);
 
     cout << "init lcm ok..." << endl;
