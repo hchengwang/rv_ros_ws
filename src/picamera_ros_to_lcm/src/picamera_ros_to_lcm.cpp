@@ -72,13 +72,10 @@ int main(int argc, char **argv)
     ss << "/" << veh << "/camera_node/image/compressed";
     ROS_INFO("Subscribe Topic: %s", ss.str().c_str());
 
-	width = 640;
-	height = 480;
-	if (veh.compare(0, 5, "mocap")){
-		width = 1280;
-		height = 960;
-	}
+	width = 1280;
+	height = 960;
 
+    // lcm_t* lcm = lcm_create("udpm://239.255.76.67:7667?recv_buf_size=100000&ttl=1");
     lcm_t* lcm = lcm_create(NULL);
     cv_bridge_lcm = new cvBridgeLCM(lcm, lcm);
 
