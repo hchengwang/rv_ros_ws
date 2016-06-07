@@ -75,12 +75,9 @@ int main(int argc, char **argv)
 	width = 1280;
 	height = 960;
 
-<<<<<<< HEAD
     // lcm_t* lcm = lcm_create("udpm://239.255.76.67:7667?recv_buf_size=100000&ttl=1");
     lcm_t* lcm = lcm_create(NULL);
-=======
-    lcm_t* lcm = lcm_create("udpm://239.255.76.67:7667?recv_buf_size=100000&ttl=1");
->>>>>>> b6486da5bde6b53d768aba76cf6250d5b2ffece8
+
     cv_bridge_lcm = new cvBridgeLCM(lcm, lcm);
 
     cout << "init lcm ok..." << endl;
