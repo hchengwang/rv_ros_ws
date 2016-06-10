@@ -1,5 +1,7 @@
 <launch>
   <arg name="veh"/>
+  <arg name="width" default="640"/>
+  <arg name="height" default="480"/>
   <arg name="config" default="baseline"/>
   <arg name="local" default="false" doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
   <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
@@ -11,6 +13,8 @@
   <group ns="$(arg veh)">
     <node pkg="picamera_ros_to_lcm" type="picamera_ros_to_lcm_node" name="picamera_ros_to_lcm_node" output="screen" clear_params="true" required="true">
 	<param name="~veh" value="$(arg veh)"/>
+	<param name="~width" value="$(arg width)"/>
+	<param name="~height" value="$(arg height)"/>
     </node>
   </group>
 </launch>

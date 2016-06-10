@@ -65,15 +65,12 @@ int main(int argc, char **argv)
 
     // two ways to setup params
     nh.param<std::string>("veh", veh, "trabant");
-    //nh.param<std::string>("width", width, 640);
-    //nh.param<std::string>("height", height, 480);
+    nh.param<int>("width", width, 640);
+    nh.param<int>("height", height, 480);
     //ros::param::param<std::string>("~veh", veh, "trabant");
     std::stringstream ss;
     ss << "/" << veh << "/camera_node/image/compressed";
     ROS_INFO("Subscribe Topic: %s", ss.str().c_str());
-
-	width = 1280;
-	height = 960;
 
     // lcm_t* lcm = lcm_create("udpm://239.255.76.67:7667?recv_buf_size=100000&ttl=1");
     lcm_t* lcm = lcm_create(NULL);
